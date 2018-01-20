@@ -40,5 +40,4 @@ const locations = [
   }
 ]
 
-
 ReactDOM.render(<App locations={locations} />, document.getElementById('root'));
