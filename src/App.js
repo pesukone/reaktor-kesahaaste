@@ -7,16 +7,9 @@ import './App.css'
 class App extends React.Component {
   constructor(props) {
     super(props)
+    const { locations } = props
     this.state = {
-      locations: [
-        {
-          name: "Helsinki",
-          position: {
-            lat: 60.1697530,
-            lng: 24.9490830
-          }
-        }
-      ]
+      locations: locations
     }
   }
 
