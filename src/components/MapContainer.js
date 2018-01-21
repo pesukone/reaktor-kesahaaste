@@ -12,21 +12,32 @@ const MapComponent = withScriptjs(withGoogleMap(({ locations, toggleInfo, select
         defaultCenter={{ lat: 40, lng: 35 }}
       >
         {locations.map(loc => 
-          <Marker
-            position={loc.position}
+          <LocationMarker
+            location={loc}
+            select={select}
+            isSelected={isSelected}
             key={loc.id}
-            onClick={select(loc)}
-          >
-            {isSelected(loc) && <InfoWindow onCloseClick={select(null)}> 
-              <div>
-                <h1>{loc.name}</h1>
-              </div>
-            </InfoWindow>}
-          </Marker>
+          />
         )}
       </GoogleMap>
     </div>
   )
 }))
+
+const LocationMarker = ({ location, select, isSelected }) => {
+  return (
+    <Marker
+      position={location.position}
+      onClick={select(location)}
+    >
+      {isSelected(location) && <InfoWindow onCloseClick={select(null)}>
+        <div>
+          <h2>{location.name}</h2>
+          <p>Current temperature: {`${location.temperature}°C`}</p>
+        </div>
+      </InfoWindow>}
+    </Marker>
+  )
+}
 
 export default MapComponent

@@ -9,6 +9,7 @@ const locations = [
       lat: 60.1697530,
       lng: 24.9490830
     },
+    temperature: -4.0,
     id: 1
   },
   {
@@ -17,6 +18,7 @@ const locations = [
       lat: 35.6584421,
       lng: 139.7328635
     },
+    temperature: 14.0,
     id: 2
   },
   {
@@ -25,6 +27,7 @@ const locations = [
       lat: 40.7406905,
       lng: -73.9938438
     },
+    temperature: 3.0,
     id: 3
   },
   {
@@ -33,6 +36,7 @@ const locations = [
       lat: 52.3650691,
       lng: 4.9040238
     },
+    temperature: 8.0,
     id: 4
   },
   {
@@ -41,6 +45,7 @@ const locations = [
       lat: 25.092535,
       lng: 55.1562243
     },
+    temperature: 23.0,
     id: 5
   }
 ]
