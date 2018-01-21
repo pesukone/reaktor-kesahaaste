@@ -9,16 +9,24 @@ const locations = [
       lat: 60.1697530,
       lng: 24.9490830
     },
-    temperature: -4.0,
+    temps: {
+      curr: -4.0,
+      hi: 10.0,
+      lo: -12.0
+    },
     id: 1
   },
   {
-    name: "Tokio",
+    name: "Tokyo",
     position: {
       lat: 35.6584421,
       lng: 139.7328635
     },
-    temperature: 14.0,
+    temps: {
+      curr: 14.0,
+      hi: 23.0,
+      lo: 8.0
+    },
     id: 2
   },
   {
@@ -27,7 +35,11 @@ const locations = [
       lat: 40.7406905,
       lng: -73.9938438
     },
-    temperature: 3.0,
+    temps: {
+      curr: 3.0,
+      hi: 7.0,
+      lo: -2.0
+    },
     id: 3
   },
   {
@@ -36,7 +48,11 @@ const locations = [
       lat: 52.3650691,
       lng: 4.9040238
     },
-    temperature: 8.0,
+    temps: {
+      curr: 8.0,
+      hi: 16.0,
+      lo: 3.0
+    },
     id: 4
   },
   {
@@ -45,7 +61,11 @@ const locations = [
       lat: 25.092535,
       lng: 55.1562243
     },
-    temperature: 23.0,
+    temps: {
+      curr: 23.0,
+      hi: 28.0,
+      lo: 19.0
+    },
     id: 5
   }
 ]
