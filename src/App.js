@@ -2,16 +2,32 @@ import React from 'react'
 
 import MapContainer from './components/MapContainer'
 
+import locationService from './services/locations'
+import tempService from './services/temps'
+
 import './App.css'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
-    const { locations } = props
     this.state = {
-      locations: locations,
+      locations: [],
+      temps: [],
       selected: null
     }
+  }
+
+  componentWillMount() {
+    locationService
+      .getAll()
+      .then(locs => {
+        this.setState({ locations: locs })
+      })
+    tempService
+      .getAll()
+      .then(temps => {
+        this.setState({ temps: temps })
+      })
   }
 
   toggleInfo = ({ open }) => () => {
@@ -35,6 +51,7 @@ class App extends React.Component {
     return (
       <MapContainer
         locations={this.state.locations}
+        temps={this.state.temps}
         select={this.select}
         isSelected={this.isSelected}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMh8h0ZICtnm-NRLEz2ya1X8odVGh_Abw&v=3.exp"

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Marker, InfoWindow } from 'react-google-maps'
 
-const LocationInfo = ({ location, select, isSelected }) => {
+const LocationInfo = ({ location, temps, select, isSelected }) => {
   return (
     <Marker
       position={location.position}
@@ -9,26 +9,26 @@ const LocationInfo = ({ location, select, isSelected }) => {
     >
       {isSelected(location) && <InfoWindow onCloseClick={select(null)}>
         <div>
-          <CurrentTemp location={location} />
-          <CurrentDayInfo location={location} />
+          <CurrentTemp locName={location.name} temp={temps.curr} />
+          <CurrentDayInfo hi={temps.hi} lo={temps.lo} />
         </div>
       </InfoWindow>}
     </Marker>
   )
 }
 
-const CurrentDayInfo = ({ location }) => {
+const CurrentDayInfo = ({ hi, lo }) => {
   return (
     <div>
       <h3>Last 24h:</h3>
-        highest: {`${location.temps.hi}°C`}
+        highest: {`${hi}°C`}
         <br />
-        lowest: {`${location.temps.lo}°C`}
+        lowest: {`${lo}°C`}
     </div>
   )
 }
 
-const CurrentTemp = ({ location }) =>
-  <h2>{`${location.name} ${location.temps.curr}°C`}</h2>
+const CurrentTemp = ({ locName, temp }) =>
+  <h2>{`${locName} ${temp}°C`}</h2>
 
 export default LocationInfo

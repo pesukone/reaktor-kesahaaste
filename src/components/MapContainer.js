@@ -3,7 +3,7 @@ import { withScriptjs, withGoogleMap, GoogleMap } from 'react-google-maps'
 
 import LocationInfo from './LocationInfo'
 
-const MapComponent = withScriptjs(withGoogleMap(({ locations, toggleInfo, select, isSelected }) => {
+const MapComponent = withScriptjs(withGoogleMap(({ locations, temps, select, isSelected }) => {
   return (
     <div>
       <GoogleMap
@@ -13,6 +13,7 @@ const MapComponent = withScriptjs(withGoogleMap(({ locations, toggleInfo, select
         {locations.map(loc => 
           <LocationInfo
             location={loc}
+            temps={temps.filter(temp => temp.locId === loc.id)[0]}
             select={select}
             isSelected={isSelected}
             key={loc.id}
