@@ -19,7 +19,7 @@ class MapContainer extends React.Component {
     })
   }
 
-  mapClicked = (props) => {
+  infoClosed = (props) => {
     if (this.state.infoVisible) {
       this.setState({
         activeMarker: null,
@@ -48,6 +48,7 @@ class MapContainer extends React.Component {
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.infoVisible}
+          onClose={this.infoClosed}
         >
           <div>
             <h1>{this.state.selectedLocation.name}</h1>
@@ -56,6 +57,18 @@ class MapContainer extends React.Component {
       </Map>
     )
   }
+}
+
+const LocationMarker = ({ location, onClick }) => {
+  console.log(<Marker name={location.name} position={location.position} />)
+  return (
+    <Marker
+      name={location.name}
+      position={location.position}
+      onClick={onClick}
+      key={location.name}
+    />
+  )
 }
 
 export default GoogleApiWrapper({
