@@ -3,19 +3,20 @@ import { withScriptjs, withGoogleMap, GoogleMap } from 'react-google-maps'
 
 import LocationInfo from './LocationInfo'
 
-const MapComponent = withScriptjs(withGoogleMap(({ locations, temps, select, isSelected }) => {
+const MapContainer = withScriptjs(withGoogleMap(({ state, select, addReading, inputChange }) => {
   return (
     <div>
       <GoogleMap
         defaultZoom={3}
         defaultCenter={{ lat: 40, lng: 35 }}
       >
-        {locations.map(loc => 
+        {state.locations.map(loc => 
           <LocationInfo
+            state={state}
             location={loc}
-            temps={temps.filter(temp => temp.locId === loc.id)[0]}
             select={select}
-            isSelected={isSelected}
+            addReading={addReading}
+            inputChange={inputChange}
             key={loc.id}
           />
         )}
@@ -24,4 +25,4 @@ const MapComponent = withScriptjs(withGoogleMap(({ locations, temps, select, isS
   )
 }))
 
-export default MapComponent
+export default MapContainer

@@ -13,7 +13,8 @@ class App extends React.Component {
     this.state = {
       locations: [],
       temps: [],
-      selected: null
+      selected: null,
+      tempVal: ''
     }
   }
 
@@ -30,30 +31,30 @@ class App extends React.Component {
       })
   }
 
-  toggleInfo = ({ open }) => () => {
-    this.setState({ infoVisible: !open })
-  }
-
-  findByName = (name) => 
-    this.state.locations
-    .filter(loc =>
-      loc.name === name)[0]
-
   select = (location) => () => {
     this.setState({
       selected: location
     })
   }
 
-  isSelected = (location) => location === this.state.selected
+  addReading = (e) => {
+    e.preventDefault()
+    console.log(this.state.tempVal)
+  }
+
+  handleInputChange = (e) => {
+    this.setState({
+      tempVal: e.target.value
+    })
+  }
 
   render() {
     return (
       <MapContainer
-        locations={this.state.locations}
-        temps={this.state.temps}
+        state={this.state}
         select={this.select}
-        isSelected={this.isSelected}
+        addReading={this.addReading}
+        inputChange={this.handleInputChange}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMh8h0ZICtnm-NRLEz2ya1X8odVGh_Abw&v=3.exp"
         loadingElement={<div style={{ height: "100%" }} />}
         containerElement={<div style={{ height: "600px" }} />}
