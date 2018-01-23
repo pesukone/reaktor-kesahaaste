@@ -8,6 +8,6 @@ CREATE TABLE Location(
 CREATE TABLE Reading(
 	id SERIAL PRIMARY KEY,
 	locId INTEGER REFERENCES Location(id),
-	value float4 NOT NULL,
-	read_time timestamp NOT NULL
+	temp float4 NOT NULL,
+	readTime timestamp NOT NULL
 );
