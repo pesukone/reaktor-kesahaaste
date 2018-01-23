@@ -12,9 +12,9 @@ const LocationInfo = ({ state, location, select, addReading, inputChange }) => {
         <div>
           <CurrentTemp
             locName={location.name}
-            temp={temps.curr}
+            temps={temps}
           />
-          <CurrentDayInfo hi={temps.hi} lo={temps.lo} />
+          <CurrentDayInfo temps={temps} />
           <TempInput 
             addReading={addReading}
             tempVal={state.tempVal}
@@ -26,19 +26,29 @@ const LocationInfo = ({ state, location, select, addReading, inputChange }) => {
   )
 }
 
-const CurrentDayInfo = ({ hi, lo }) => {
-  return (
-    <div>
-      <h3>Last 24h:</h3>
-        highest: {`${hi}°C`}
+const CurrentDayInfo = ({ temps }) => {
+  if (temps) {
+    return (
+      <div>
+        <h3>Last 24h:</h3>
+        highest: {`${temps.hi}°C`}
         <br />
-        lowest: {`${lo}°C`}
-    </div>
-  )
+        lowest: {`${temps.lo}°C`}
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        no data available
+      </div>
+    )
+  }
 }
 
-const CurrentTemp = ({ locName, temp }) =>
-  <h2>{`${locName} ${temp}°C`}</h2>
+const CurrentTemp = ({ locName, temps }) =>
+  temps ?
+    <h2>{`${locName} ${temps.curr}°C`}</h2> :
+    <h2>{locName}</h2>
 
 const TempInput = ({ addReading, tempVal, inputChange }) => {
   return (
@@ -58,7 +68,7 @@ const TempInput = ({ addReading, tempVal, inputChange }) => {
 
 const getTemps = (state, loc) =>
   state.temps.filter(temp =>
-    loc.id === temp.locId)[0]
+    loc.id === temp.loc_id)[0]
 
 const isSelected = (state, loc) => state.selected === loc
 

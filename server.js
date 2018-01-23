@@ -29,47 +29,30 @@ app.get('/locations', (req, resp) => {
 })
 
 app.get('/temps', (req, resp) => {
-  /*db.query(`SELECT DISTINCT ON (locId) locId as id, temp as curr
-            FROM Reading
-            ORDER BY locId, readTime DESC`)
-    .then(result => {
-      console.log(JSON.stringify(result.rows))
-    })
-    .catch(e => setImmediate(() => { throw e }))
-
-  db.query(`SELECT DISTINCT ON (locId) locId as id, temp as lo
-            FROM Reading
-            WHERE readTime > timestamp 'now' - interval '24 hours'
-            ORDER BY locId, temp`)
-    .then(result => {
-      console.log(JSON.stringify(result.rows))
-    })
-    .catch(e => setimmediate(() => { throw e }))*/
-  db.query(`SELECT A.locId as id, a.temp as curr, b.temp as lo, c.temp as hi
+  db.query(`SELECT A.loc_id, a.temp as curr, b.temp as lo, c.temp as hi
             FROM (
-                  SELECT DISTINCT ON (locId) locId, temp
+                  SELECT DISTINCT ON (loc_id) loc_id, temp
                   FROM Reading
-                  ORDER BY locId, readTime DESC
+                  ORDER BY loc_id, readTime DESC
                  ) A,
                  (
-                  SELECT DISTINCT ON (locId) locId, temp
+                  SELECT DISTINCT ON (loc_id) loc_id, temp
                   FROM Reading
                   WHERE readTime > timestamp 'now' - interval '24 hours'
-                  ORDER BY locId, temp
+                  ORDER BY loc_id, temp
                  ) B,
                  (
-                  SELECT DISTINCT ON (locId) locId, temp
+                  SELECT DISTINCT ON (loc_id) loc_id, temp
                   FROM Reading
                   WHERE readTime > timestamp 'now' - interval '24 hours'
-                  ORDER BY locId, temp DESC
+                  ORDER BY loc_id, temp DESC
                  ) C
-            WHERE A.locId = B.locId
-            AND B.locId = C.locId`)
+            WHERE A.loc_id = B.loc_id
+            AND B.loc_id = C.loc_id`)
     .then(result => {
-      console.log(JSON.stringify(result.rows))
+      resp.json(result.rows)
     })
     .catch(e => setImmediate(() => { throw e }))
-  resp.json([])
 })
 
 app.post('/temps', (req, resp) => {
