@@ -33,18 +33,18 @@ app.get('/temps', (req, resp) => {
             FROM (
                   SELECT DISTINCT ON (loc_id) loc_id, temp
                   FROM Reading
-                  ORDER BY loc_id, readTime DESC
+                  ORDER BY loc_id, read_time DESC
                  ) A,
                  (
                   SELECT DISTINCT ON (loc_id) loc_id, temp
                   FROM Reading
-                  WHERE readTime > timestamp 'now' - interval '24 hours'
+                  WHERE read_time > timestamp 'now' - interval '24 hours'
                   ORDER BY loc_id, temp
                  ) B,
                  (
                   SELECT DISTINCT ON (loc_id) loc_id, temp
                   FROM Reading
-                  WHERE readTime > timestamp 'now' - interval '24 hours'
+                  WHERE read_time > timestamp 'now' - interval '24 hours'
                   ORDER BY loc_id, temp DESC
                  ) C
             WHERE A.loc_id = B.loc_id
@@ -55,8 +55,22 @@ app.get('/temps', (req, resp) => {
     .catch(e => setImmediate(() => { throw e }))
 })
 
-app.post('/temps', (req, resp) => {
-  console.log(req.body)
+app.post('/temps/:id', (req, resp) => {
+  const body = req.body
+
+  if (body.content === undefined) {
+    return resp.status(400).json({ error: 'content missing'})
+  }
+
+  db.query(`INSERT INTO Reading (loc_id, temp, read_time)
+            VALUES (id, req.params.temp, timestamp 'now')`)
+    .then(result => {
+      resp.json(req.body)
+    })
+    .catch(e => setImmediate(() => {
+      throw e
+      resp.status(400).json({ error: 'invalid parameters' })
+    }))
 
   resp.json(req.body)
 })

@@ -38,9 +38,7 @@ const CurrentDayInfo = ({ temps }) => {
     )
   } else {
     return (
-      <div>
-        no data available
-      </div>
+      <b>no temperature data available</b>
     )
   }
 }

@@ -9,5 +9,5 @@ CREATE TABLE Reading(
 	id SERIAL PRIMARY KEY,
 	loc_id INTEGER REFERENCES Location(id),
 	temp float4 NOT NULL,
-	readTime timestamp NOT NULL
+	read_time timestamp NOT NULL
 );
