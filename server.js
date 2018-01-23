@@ -22,9 +22,19 @@ app.get('/', (req, resp) => {
 app.get('/locations', (req, resp) => {
   db.query('SELECT * FROM Location')
     .then(result => {
-      resp.json(result.rows)
+      resp.json(result.rows.map(row => {
+        position = { lat: row.lat, lng: row.lng }
+        delete row.lat
+        delete row.lng
+        row.position = position
+        return row
+      }))
     })
     .catch(e => setImmediate(() => { throw e }))
+})
+
+app.get('/temps', (req, resp) => {
+  resp.json([])
 })
 
 app.post('/temps', (req, resp) => {

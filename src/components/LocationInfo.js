@@ -3,7 +3,7 @@ import { Marker, InfoWindow } from 'react-google-maps'
 
 const LocationInfo = ({ state, location, select, addReading, inputChange }) => {
   const temps = getTemps(state, location)
-  return (
+    return (
     <Marker
       position={location.position}
       onClick={select(location)}
