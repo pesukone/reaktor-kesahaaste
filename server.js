@@ -9,6 +9,27 @@ app.use(cors())
 
 const db = new Pool()
 
+app.post('/temps', (req, resp) => {
+  const body = req.body
+
+  if (!Number.isInteger(body.temp)) {
+    return resp.status(400).json({ error: 'invalid reading'})
+  }
+
+  if (!Number.isInteger(body.loc_id)) {
+    return resp.status(400).json({ error: 'invalid location id' })
+  }
+
+  db.query(`INSERT INTO Reading (loc_id, temp, read_time)
+            VALUES (${body.loc_id}, ${body.temp}, timestamp 'now')`)
+    .catch(e => setImmediate(() => {
+      console.log(e)
+      resp.status(400).json({ error: 'invalid parameters' })
+    }))
+
+  resp.json(body)
+})
+
 app.get('/', (req, resp) => {
   resp.send('<h1>kukkuu</h1>')
 })
@@ -52,27 +73,7 @@ app.get('/temps', (req, resp) => {
     .then(result => {
       resp.json(result.rows)
     })
-    .catch(e => setImmediate(() => { throw e }))
-})
-
-app.post('/temps/:id', (req, resp) => {
-  const body = req.body
-
-  if (body.content === undefined) {
-    return resp.status(400).json({ error: 'content missing'})
-  }
-
-  db.query(`INSERT INTO Reading (loc_id, temp, read_time)
-            VALUES (id, req.params.temp, timestamp 'now')`)
-    .then(result => {
-      resp.json(req.body)
-    })
-    .catch(e => setImmediate(() => {
-      throw e
-      resp.status(400).json({ error: 'invalid parameters' })
-    }))
-
-  resp.json(req.body)
+    .catch(e => setImmediate(() => { console.log(e) }))
 })
 
 const PORT = 3001

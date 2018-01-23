@@ -39,7 +39,19 @@ class App extends React.Component {
 
   addReading = (e) => {
     e.preventDefault()
-    console.log(this.state.tempVal)
+
+    const reading = {
+      loc_id: this.state.selected.id,
+      temp: this.state.tempVal
+    }
+
+    tempService.post(reading)
+      .then(resp => {
+        tempService.getAll()
+          .then(temps => {
+            this.setState({ temps: temps })
+          })
+      })
   }
 
   handleInputChange = (e) => {
