@@ -1,29 +1,42 @@
 const express = require('express')
-const { Client } = require('pg')
+const { Pool } = require('pg')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 const app = express()
 app.use(bodyParser.json())
+app.use(cors())
 
-const db = new Client()
-db.connect()
+const db = new Pool()
 
-  /*db.query('SELECT $1::text as message', ['Hello world!'], (err, res) => {
-  console.log(err ? err.stack : res.rows[0].message)
-  db.end()
-})*/
+  /*db.query('SELECT * from Location')
+  .then(res => {
+    console.log(JSON.stringify(res.rows))
+  })
+  .catch(e => setImmediate(() => { throw e }))*/
 
-app.get('/', (req, res) => {
-  res.send('<h1>kukkuu</h1>')
+app.get('/', (req, resp) => {
+  resp.send('<h1>kukkuu</h1>')
 })
 
-app.post('/temps', (req, res) => {
+app.get('/locations', (req, resp) => {
+  db.query('SELECT * FROM Location')
+    .then(result => {
+      resp.json(result.rows)
+    })
+    .catch(e => setImmediate(() => { throw e }))
+})
+
+app.post('/temps', (req, resp) => {
   console.log(req.body)
 
-  res.json(req.body)
+  resp.json(req.body)
 })
 
 const PORT = 3001
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
+process.on('SIGTERM', () => { db.end() })
