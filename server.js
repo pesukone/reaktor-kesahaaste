@@ -8,7 +8,11 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use(express.static('build'))
 
-const db = new Pool()
+//const db = new Pool()
+const db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+})
 
 app.post('/temps', (req, resp) => {
   const body = req.body
