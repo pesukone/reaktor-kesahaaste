@@ -14,7 +14,9 @@ class App extends React.Component {
       locations: [],
       temps: [],
       selected: null,
-      tempVal: ''
+      tempVal: '',
+      notification: null,
+      error: null
     }
   }
 
@@ -50,11 +52,19 @@ class App extends React.Component {
         tempService.getAll()
           .then(temps => {
             this.setState({ temps: temps })
+            this.showNotification("reading added successfully", false)
           })
       })
       .catch(err => {
-        console.log(err.response.data.error)
+        this.showNotification(err.response.data.error, true)
       })
+  }
+
+  showNotification = (text, isError) => {
+    this.setState({ [isError ? "error" : "notification"] : text })
+    setTimeout(() => {
+      this.setState({ [isError ? "error" : "notification"] : null })
+    }, 3000)
   }
 
   handleInputChange = (e) => {

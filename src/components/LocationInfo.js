@@ -4,6 +4,7 @@ import { Marker, InfoWindow } from 'react-google-maps'
 import CurrentTemp from './CurrentTemp'
 import CurrentDayInfo from './CurrentDayInfo'
 import TempInput from './TempInput'
+import Notification from './Notification'
 
 const LocationInfo = ({ state, location, select, addReading, inputChange }) => {
   const temps = getTemps(state, location)
@@ -19,6 +20,8 @@ const LocationInfo = ({ state, location, select, addReading, inputChange }) => {
             temps={temps}
           />
           <CurrentDayInfo temps={temps} />
+          <Notification message={state.notification} isError={false} />
+          <Notification message={state.error} isError={true} />
           <TempInput 
             addReading={addReading}
             tempVal={state.tempVal}
