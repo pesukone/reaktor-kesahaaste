@@ -82,7 +82,7 @@ class App extends React.Component {
         inputChange={this.handleInputChange}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMh8h0ZICtnm-NRLEz2ya1X8odVGh_Abw&v=3.exp"
         loadingElement={<div style={{ height: "100%" }} />}
-        containerElement={<div style={{ height: "600px" }} />}
+        containerElement={<div style={{ height: window.innerHeight }} />}
         mapElement={<div style={{ height: "100%" }} />}
       />
     )
