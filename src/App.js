@@ -46,11 +46,14 @@ class App extends React.Component {
     }
 
     tempService.post(reading)
-      .then(resp => {
+      .then(() => {
         tempService.getAll()
           .then(temps => {
             this.setState({ temps: temps })
           })
+      })
+      .catch(err => {
+        console.log(err.response.data.error)
       })
   }
 

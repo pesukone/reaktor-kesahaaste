@@ -12,7 +12,7 @@ const db = new Pool()
 app.post('/temps', (req, resp) => {
   const body = req.body
 
-  if (!Number.isInteger(body.temp)) {
+  if (Number.isNaN(Number.parseFloat(body.temp))) {
     return resp.status(400).json({ error: 'invalid temperature'})
   }
 
@@ -22,12 +22,10 @@ app.post('/temps', (req, resp) => {
 
   db.query(`INSERT INTO Reading (loc_id, temp, read_time)
             VALUES (${body.loc_id}, ${body.temp}, timestamp 'now')`)
+    .then(result => resp.json(body))
     .catch(e => setImmediate(() => {
-      console.log(e)
       resp.status(400).json({ error: 'invalid parameters' })
     }))
-
-  resp.json(body)
 })
 
 app.get('/locations', (req, resp) => {
