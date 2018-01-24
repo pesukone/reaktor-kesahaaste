@@ -13,7 +13,7 @@ app.post('/temps', (req, resp) => {
   const body = req.body
 
   if (!Number.isInteger(body.temp)) {
-    return resp.status(400).json({ error: 'invalid reading'})
+    return resp.status(400).json({ error: 'invalid temperature'})
   }
 
   if (!Number.isInteger(body.loc_id)) {
@@ -30,10 +30,6 @@ app.post('/temps', (req, resp) => {
   resp.json(body)
 })
 
-app.get('/', (req, resp) => {
-  resp.send('<h1>kukkuu</h1>')
-})
-
 app.get('/locations', (req, resp) => {
   db.query('SELECT * FROM Location')
     .then(result => 
@@ -46,7 +42,7 @@ app.get('/locations', (req, resp) => {
           return row
         }))
     )
-    .catch(e => setImmediate(() => { throw e }))
+    .catch(e => setImmediate(() => { console.log(e) }))
 })
 
 app.get('/temps', (req, resp) => {
