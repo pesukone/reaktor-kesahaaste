@@ -72,9 +72,7 @@ app.get('/temps', (req, resp) => {
     .catch(e => setImmediate(() => { console.log(e) }))
 })
 
-const PORT = 3001
-
-app.listen(PORT, () => {
+app.listen(process.env.port || 3001, () => {
   console.log(`Server running on port ${PORT}`)
 })
 
