@@ -11,8 +11,9 @@ const db = new Pool()
 
 app.post('/temps', (req, resp) => {
   const body = req.body
+  const temp = Number.parseFloat(body.temp)
 
-  if (Number.isNaN(Number.parseFloat(body.temp))) {
+  if (Number.isNaN(temp) || temp > 60.0 || temp < -60.0) {
     return resp.status(400).json({ error: 'invalid temperature'})
   }
 
