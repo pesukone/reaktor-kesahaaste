@@ -26,8 +26,12 @@ app.post('/temps', (req, resp) => {
     return resp.status(400).json({ error: 'invalid location id' })
   }
 
-  db.query(`INSERT INTO Reading (loc_id, temp, read_time)
-            VALUES (${body.loc_id}, ${body.temp}, timestamp 'now')`)
+  db.query({
+    name: 'add reading',
+    text: `INSERT INTO Reading (loc_id, temp, read_time)
+           VALUES ($1, $2, timestamp 'now')`,
+    values: [body.loc_id, body.temp]
+  })
     .then(result => resp.json(body))
     .catch(e => setImmediate(() => {
       resp.status(400).json({ error: 'invalid parameters' })
