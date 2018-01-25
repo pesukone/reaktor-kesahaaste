@@ -51,7 +51,10 @@ class App extends React.Component {
       .then(() => {
         tempService.getAll()
           .then(temps => {
-            this.setState({ temps: temps })
+            this.setState({
+              temps: temps,
+              tempVal: ''
+            })
             this.showNotification("reading added successfully", false)
           })
       })
